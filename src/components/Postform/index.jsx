@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import {Container, Row, Col, Form, FormGroup, FormInput, Button} from "shards-react"
+import { insertPost } from '../../actions/post.actions';
 
 function Postform() {
   const [post, setPost] = useState({
@@ -7,29 +9,22 @@ function Postform() {
     body: ''
   })
 
- function onChange(event) {
-   setPost({...post, [event.target.name]: event.target.value});
- }
+  function onChange(event) {
+    setPost({...post, [event.target.name]: event.target.value});
+  }
 
- function onSubmit(e){
+  const dispatch = useDispatch();
+
+  function onSubmit(e){
     e.preventDefault();
 
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(post)
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
+    dispatch(insertPost(post)).then(()=>{
       setPost({
         title: '',
         body: ''
-      })
-    });
- }
+      });
+    })
+  }
 
   return (
     <Container>

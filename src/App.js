@@ -4,13 +4,19 @@ import "shards-ui/dist/css/shards.min.css"
 import Posts from './components/Posts';
 import Postform from "./components/Postform";
 
+import {Provider} from 'react-redux';
+
+import store from './store'
+
 function App() {
   return (
-    <div className="App">
-      <Postform />
-      <hr />
-      <Posts />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Postform />
+        <hr />
+        <Posts />
+      </div>
+    </Provider>
   );
 }
 

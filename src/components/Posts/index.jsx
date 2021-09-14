@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {Container, Row, Col} from "shards-react"
-
+import {fetchPosts} from '../../actions/post.actions'
 
 function Posts() {
-  const [posts, setPosts] = useState(null);
-  function getPosts () {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(res => res.json())
-      .then(data => {setPosts(data)})
-  }
+  const posts = useSelector(state => state.post.items)
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    getPosts();    
-  }, [])
+  useEffect(() => {    
+    dispatch(fetchPosts());    
+    console.log(posts);
+  }, []);
 
   return (
     <Container>
